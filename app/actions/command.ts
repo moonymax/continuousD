@@ -3,7 +3,7 @@ import { exec } from "child_process";
 export function command(
   command: string,
   env?: {
-    [key: string]: string;
+    [key: string]: string | undefined;
   },
   cwd?: string
 ): Promise<string> {
