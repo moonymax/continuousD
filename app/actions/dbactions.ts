@@ -1,43 +1,13 @@
 "use server";
 import { exec } from "child_process";
 import { revalidatePath } from "next/cache";
+import { isValidReponame, isValidUsername } from "./validation";
+import { command } from "./command";
 
 const USERNAME = "moonymax";
 const REPONAME = "helloworld";
 
 const token = process.env.GITHUB_TOKEN;
-
-function isValidUsername(s: string) {
-  const pattern = /^[a-zA-Z0-9-]{1,39}$/;
-  return pattern.test(s);
-}
-
-function isValidReponame(s: string) {
-  const pattern = /^[a-zA-Z0-9-_]{1,64}$/;
-  return pattern.test(s);
-}
-
-function command(
-  command: string,
-  env: {
-    [key: string]: string;
-  } & NodeJS.ProcessEnv,
-  cwd?: string
-): Promise<string> {
-  return new Promise((resolve, reject) => {
-    exec(command, { env, cwd }, (error, stdout, stderr) => {
-      if (error) {
-        reject(`error: ${error.message}`);
-        return;
-      }
-      if (stderr) {
-        reject(`stderr: ${stderr}`);
-        return;
-      }
-      resolve(stdout);
-    });
-  });
-}
 
 export async function gitclone() {
   return await _gitclone(USERNAME, REPONAME, token!);

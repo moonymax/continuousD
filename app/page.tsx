@@ -1,10 +1,5 @@
-import Home from "./page.client";
-import { Hash } from "./components";
+import Link from "next/link";
 
-export default async function Page() {
-  return (
-    <Home>
-      <Hash />
-    </Home>
-  );
+export default function Home() {
+  return <Link href="/deployments">Login</Link>;
 }
